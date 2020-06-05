@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              06/03/2020 16:03:32 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              06/05/2020 17:07:17 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -9,125 +9,33 @@ COMPILER INVOKED BY: d:\Keil_C51\C51\BIN\C51.EXE prj\main.c ROM(SMALL) OPTIMIZE(
 line level    source
 
    1          #include "config.h"
-   2          
-   3          u8 sys_tick;
-   4          u8 second,minute,hour;
+   2          #include "sys_tick.h"
+   3          #include "debug.h"
+   4          #include "humidity.h"
    5          
-   6          void Timer0Init(void)   //10ms@6.000MHz
+   6          void main(void)
    7          {
-   8   1        AUXR |= 0x80;   //?????1T??
-   9   1        TMOD &= 0xF0;   //???????
-  10   1        TMOD |= 0x01;   //???????
-  11   1        TL0 = 0xA0;   //??????
-  12   1        TH0 = 0x15;   //??????
-  13   1        TF0 = 0;    //??TF0??
-  14   1        TR0 = 1;    //???0????
-  15   1        
-  16   1        ET0=1;
-  17   1      }
-  18          
-  19          void UartInit(void)   //9600bps@6.000MHz
-  20          {
-  21   1        PCON |= 0x80;   //????????SMOD
-  22   1        SCON = 0x50;    //8???,?????
-  23   1        AUXR |= 0x40;   //???1???Fosc,?1T
-  24   1        AUXR &= 0xFE;   //??1?????1???????
-  25   1        TMOD &= 0x0F;   //?????1???
-  26   1        TMOD |= 0x20;   //?????1?8???????
-  27   1        TL1 = 0xD9;   //??????
-  28   1        TH1 = 0xD9;   //????????
-  29   1        ET1 = 0;    //?????1??
-  30   1        TR1 = 1;    //?????1
-  31   1      }
-  32          void sys_clock_int(void) interrupt 1
-  33          {
-  34   1        if(sys_tick>0)
-  35   1        {
-  36   2          sys_tick--;
-  37   2        }
-  38   1        else
-  39   1        {
-  40   2          sys_tick=TICK_PER_SECOND;
-  41   2          second++;
-  42   2          if(second>=60)
-  43   2          {
-  44   3            second=0;
-  45   3            minute++;
-  46   3            if(minute>=60)
-  47   3            {
-  48   4              minute=0;
-  49   4              hour++;
-  50   4            }
-  51   3          }
-  52   2        }
-  53   1      }
-  54          
-C51 COMPILER V9.56.0.0   MAIN                                                              06/03/2020 16:03:32 PAGE 2   
-
-  55          void UsartSendString(u8 *str)
-  56          {
-  57   1        while(*str)
-  58   1        {
-  59   2          SBUF = *str;
-  60   2          while(!TI)  ;
-  61   2          TI=0;
-  62   2          str++;
-  63   2        }
-  64   1      }
-  65          
-  66          void Debug_Var(u16 var)
-  67          {
-  68   1        u8 num[6];
-  69   1        num[0]=var/10000+0x30;
-  70   1        num[1]=var%10000/1000+0x30;
-  71   1        num[2]=var%1000/100+0x30;
-  72   1        num[3]=var%100/10+0x30;
-  73   1        num[4]=var%10+0x30;
-  74   1        num[5]='\0';
-  75   1        debug(num);
-  76   1      }
-  77          
-  78          
-  79          void task0_Clock(void)
-  80          {
-  81   1        if(sys_tick == 0)
-  82   1        {
-  83   2          debug_var((u16)hour);
-  84   2          debug(":");
-  85   2          debug_var((u16)minute);
-  86   2          debug(":");
-  87   2          debug_var((u16)second);
-  88   2          debug("\r\n");
-  89   2        }
-  90   1      }
-  91          
-  92          void main(void)
-  93          {
-  94   1        EA=0;
-  95   1        Timer0Init();
-  96   1        UartInit();
-  97   1        
-  98   1        sys_tick = TICK_PER_SECOND;
-  99   1        second = 0;
- 100   1        minute = 0;
- 101   1        hour = 0;
- 102   1        EA=1;
- 103   1      
- 104   1        while(1)
- 105   1        {
- 106   2          task0_Clock();
- 107   2        }
- 108   1      }
+   8   1        EA=0;
+   9   1        sys_tick_init();
+  10   1        UsartInit();
+  11   1        task_HumidityInit();
+  12   1        
+  13   1        EA=1;
+  14   1      
+  15   1        while(1)
+  16   1        {
+  17   2          task0_Clock();
+  18   2          task1_Humidity();
+  19   2        }
+  20   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    288    ----
-   CONSTANT SIZE    =      5    ----
+   CODE SIZE        =     16    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      4       6
-C51 COMPILER V9.56.0.0   MAIN                                                              06/03/2020 16:03:32 PAGE 3   
-
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

@@ -1,0 +1,127 @@
+C51 COMPILER V9.56.0.0   HUMIDUTY                                                          06/05/2020 17:07:17 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HUMIDUTY
+OBJECT MODULE PLACED IN .\Objects\humiduty.obj
+COMPILER INVOKED BY: d:\Keil_C51\C51\BIN\C51.EXE prj\humiduty.c ROM(SMALL) OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\humiduty.lst) TABS(2) OBJECT(.\Objects\humiduty.obj)
+
+line level    source
+
+   1          #include "config.h"
+   2          #include "debug.h"
+   3          #include "humidity.h"
+   4          
+   5          #define ADC_POWER_BIT 0x80
+   6          #define ADC_FLAG_BIT  0x10
+   7          #define ADC_START_BIT 0x08
+   8          #define ADC_SPEEDLL_BIT   0x00    //1080 clocks
+   9          #define ADC_SPEEDL_BIT    0x20    //810 clocks
+  10          #define ADC_SPEEDLH_BIT   0x40    //540 clocks
+  11          #define ADC_SPEEDHHBIT    0x50    //270 clocks
+  12          
+  13          #define HUMI_ADC_CH 0x00
+  14          
+  15          u8 task_humidity_timer;
+  16          
+  17          void task_HumidityInit(void)
+  18          {
+  19   1        P1M0 |=0x01;
+  20   1        P1M1 |=0x01;
+  21   1        DAT_pin = 1;
+  22   1        ADC_DATA = 0;
+  23   1        ADC_CONTR =ADC_POWER_BIT | ADC_SPEEDLL_BIT;
+  24   1        task_humidity_timer = TASK_HUMIDITY_TIMER;
+  25   1        
+  26   1      }
+  27          
+  28          void HumiDisplay(u8 humi)
+  29          {
+  30   1        if(humi>=0 && humi <=9)
+  31   1        {
+  32   2          LED9_off();
+  33   2          LED8_off();
+  34   2          LED7_off();
+  35   2          LED6_off();
+  36   2          LED5_off();
+  37   2          LED4_off();
+  38   2          LED3_off();
+  39   2          LED2_off();
+  40   2          LED1_off();
+  41   2          LED0_off();
+  42   2          switch(humi)
+  43   2          {
+  44   3            case 9:
+  45   3              LED9_on();
+  46   3            case 8:
+  47   3              LED8_on();
+  48   3            case 7:
+  49   3              LED7_on();
+  50   3            case 6:
+  51   3              LED6_on();
+  52   3            case 5:
+  53   3              LED5_on();
+  54   3            case 4:
+C51 COMPILER V9.56.0.0   HUMIDUTY                                                          06/05/2020 17:07:17 PAGE 2   
+
+  55   3              LED4_on();
+  56   3            case 3:
+  57   3              LED3_on();
+  58   3            case 2:
+  59   3              LED2_on();
+  60   3            case 1:
+  61   3              LED1_on();
+  62   3            case 0:
+  63   3              LED0_on();
+  64   3            default:
+  65   3              break;
+  66   3          }
+  67   2        }
+  68   1      }
+  69          
+  70          u8 HumiGet(void)
+  71          {
+  72   1        ADC_CONTR = ADC_POWER_BIT | ADC_SPEEDLL_BIT | HUMI_ADC_CH | ADC_START_BIT;
+  73   1        _nop_();
+  74   1        _nop_();
+  75   1        _nop_();
+  76   1        _nop_();
+  77   1        while(!(ADC_CONTR & ADC_FLAG_BIT));
+  78   1        ADC_CONTR &= ~ADC_FLAG_BIT;
+  79   1        
+  80   1        return ADC_DATA;
+  81   1      }
+  82          
+  83          void task1_Humidity(void)
+  84          {
+  85   1        u8 humi_grade, humi_sense;
+  86   1        if(task_humidity_timer == 0)
+  87   1        {
+  88   2          task_humidity_timer=TASK_HUMIDITY_TIMER;
+  89   2      
+  90   2          if(SENSE_pin == 1)
+  91   2            humi_sense = 1;
+  92   2          else
+  93   2            humi_sense = 0;
+  94   2          //humi_grade = (u8)((10*HumiGet())/0xff + 0.5);
+  95   2          debug_var((u16)(humi_grade));
+  96   2          debug(":");
+  97   2          debug_var((u16)(humi_sense));
+  98   2          debug("\r\n");
+  99   2          HumiDisplay(humi_grade);
+ 100   2        }
+ 101   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    168    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

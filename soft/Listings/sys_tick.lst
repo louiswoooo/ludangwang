@@ -1,0 +1,100 @@
+C51 COMPILER V9.56.0.0   SYS_TICK                                                          06/05/2020 17:07:17 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE SYS_TICK
+OBJECT MODULE PLACED IN .\Objects\sys_tick.obj
+COMPILER INVOKED BY: d:\Keil_C51\C51\BIN\C51.EXE prj\sys_tick.c ROM(SMALL) OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\sys_tick.lst) TABS(2) OBJECT(.\Objects\sys_tick.obj)
+
+line level    source
+
+   1          #include "config.h"
+   2          #include "debug.h"
+   3          #include "humidity.h"
+   4          
+   5          #define TICK_PER_SECOND 100
+   6          u8 sys_tick;
+   7          u8 second,minute,hour;
+   8          
+   9          
+  10          void sys_tick_init(void)    //10ms@6.000MHz
+  11          {
+  12   1        AUXR |= 0x80;   //?????1T??
+  13   1        TMOD &= 0xF0;   //???????
+  14   1        TMOD |= 0x01;   //???????
+  15   1        TL0 = 0x74;   //??????
+  16   1        TH0 = 0x20;   //??????
+  17   1        TF0 = 0;    //??TF0??
+  18   1        TR0 = 1;    //???0????
+  19   1        
+  20   1        ET0=1;
+  21   1        
+  22   1        sys_tick = TICK_PER_SECOND;
+  23   1        second = 0;
+  24   1        minute = 0;
+  25   1        hour = 0;
+  26   1      }
+  27          
+  28          void sys_tick_int(void) interrupt 1
+  29          {
+  30   1        TR0=0;
+  31   1        TL0 = 0x7a;   //??????
+  32   1        TH0 = 0x20;   //??????
+  33   1        TR0=1;
+  34   1      
+  35   1        if(task_humidity_timer>0)
+  36   1        {
+  37   2          task_humidity_timer--;
+  38   2        }
+  39   1        
+  40   1      
+  41   1        if(sys_tick>0)
+  42   1        {
+  43   2          sys_tick--;
+  44   2        }
+  45   1        else
+  46   1        {
+  47   2          sys_tick=TICK_PER_SECOND;
+  48   2          
+  49   2          second++;
+  50   2          if(second>=60)
+  51   2          {
+  52   3            second=0;
+  53   3            minute++;
+  54   3            if(minute>=60)
+C51 COMPILER V9.56.0.0   SYS_TICK                                                          06/05/2020 17:07:17 PAGE 2   
+
+  55   3            {
+  56   4              minute=0;
+  57   4              hour++;
+  58   4            }
+  59   3          }
+  60   2        }
+  61   1      }
+  62          
+  63          void task0_Clock(void)
+  64          {
+  65   1        if(sys_tick == 0)
+  66   1        {
+  67   2          debug_var((u16)hour);
+  68   2          debug(":");
+  69   2          debug_var((u16)minute);
+  70   2          debug(":");
+  71   2          debug_var((u16)second);
+  72   2          debug("\r\n");
+  73   2        }
+  74   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    140    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

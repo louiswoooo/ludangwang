@@ -48,7 +48,7 @@
           <OutputName>ludangwang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
@@ -367,6 +367,26 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\prj\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\prj\debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\prj\sys_tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>humiduty.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\prj\humiduty.c</FilePath>
+            </File>
+            <File>
+              <FileName>config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\prj\config.c</FilePath>
             </File>
           </Files>
         </Group>

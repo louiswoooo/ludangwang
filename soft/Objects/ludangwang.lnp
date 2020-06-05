@@ -1,3 +1,7 @@
-".\Objects\main.obj" 
+".\Objects\main.obj",
+".\Objects\debug.obj",
+".\Objects\sys_tick.obj",
+".\Objects\humiduty.obj",
+".\Objects\config.obj" 
 TO ".\Objects\ludangwang" 
 PRINT(".\Listings\ludangwang.m51") RAMSIZE(256) 
