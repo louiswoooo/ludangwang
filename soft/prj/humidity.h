@@ -4,11 +4,13 @@
 
 #include "config.h"
 
-#define TASK_HUMIDITY_TIMER	100
 
 #define SENSE_pin P32
 #define DAT_pin		P10
 #define RLY_pin 	P33
+
+#define ValveOn()		RLY_pin = 1
+#define ValveOff()		RLY_pin = 0
 
 #define LED0_pin	P35
 #define LED1_pin	P34

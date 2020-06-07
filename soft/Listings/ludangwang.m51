@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        06/05/2020  17:07:18  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/07/2020  12:51:14  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -6,7 +6,7 @@ D:\KEIL_C51\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\debug.obj, .\Objects\
 >> Objects\config.obj TO .\Objects\ludangwang PRINT (.\Listings\ludangwang.m51) RAMSIZE (256)
 
 
-MEMORY MODEL: SMALL
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
 
 
 INPUT MODULES INCLUDED:
@@ -15,9 +15,16 @@ INPUT MODULES INCLUDED:
   .\Objects\sys_tick.obj (SYS_TICK)
   .\Objects\humiduty.obj (HUMIDUTY)
   .\Objects\config.obj (CONFIG)
+  D:\KEIL_C51\C51\LIB\C51FPS.LIB (?C?FPADD)
+  D:\KEIL_C51\C51\LIB\C51FPS.LIB (?C?FPDIV)
+  D:\KEIL_C51\C51\LIB\C51FPS.LIB (?C?FCAST)
+  D:\KEIL_C51\C51\LIB\C51FPS.LIB (?C?CASTF)
+  D:\KEIL_C51\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
   D:\KEIL_C51\C51\LIB\C51S.LIB (?C_STARTUP)
   D:\KEIL_C51\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\KEIL_C51\C51\LIB\C51S.LIB (?C?IMUL)
   D:\KEIL_C51\C51\LIB\C51S.LIB (?C?UIDIV)
+  D:\KEIL_C51\C51\LIB\C51S.LIB (?C?LNEG)
 
 
 LINK MAP OF MODULE:  .\Objects\ludangwang (MAIN)
@@ -28,30 +35,37 @@ LINK MAP OF MODULE:  .\Objects\ludangwang (MAIN)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0008H     UNIT         _DATA_GROUP_
-            DATA    0010H     0004H     UNIT         ?DT?SYS_TICK
-            DATA    0014H     0001H     UNIT         ?DT?HUMIDUTY
-            IDATA   0015H     0001H     UNIT         ?STACK
+            DATA    0008H     0009H     UNIT         _DATA_GROUP_
+            DATA    0011H     0004H     UNIT         ?DT?SYS_TICK
+            DATA    0015H     0002H     UNIT         ?DT?HUMIDUTY
+            IDATA   0017H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     0005H     UNIT         ?CO?SYS_TICK
-                    0008H     0003H                  *** GAP ***
+            CODE    0003H     0004H     INBLOCK      ?PR?SYS_IDLE?SYS_TICK
+            CODE    0007H     0004H     INBLOCK      ?PR?DOG_CLEAR?SYS_TICK
             CODE    000BH     0002H     ABSOLUTE     
-            CODE    000DH     006EH     UNIT         ?C?LIB_CODE
-            CODE    007BH     0069H     INBLOCK      ?PR?_USARTSENDVAR?DEBUG
-            CODE    00E4H     0055H     INBLOCK      ?PR?_HUMIDISPLAY?HUMIDUTY
-            CODE    0139H     0043H     INBLOCK      ?PR?SYS_TICK_INT?SYS_TICK
-            CODE    017CH     002FH     INBLOCK      ?PR?TASK1_HUMIDITY?HUMIDUTY
-            CODE    01ABH     0029H     INBLOCK      ?PR?TASK0_CLOCK?SYS_TICK
-            CODE    01D4H     0020H     INBLOCK      ?PR?SYS_TICK_INIT?SYS_TICK
-            CODE    01F4H     001DH     INBLOCK      ?PR?USARTINIT?DEBUG
-            CODE    0211H     0015H     INBLOCK      ?PR?_USARTSENDSTRING?DEBUG
-            CODE    0226H     0012H     INBLOCK      ?PR?TASK_HUMIDITYINIT?HUMIDUTY
-            CODE    0238H     0012H     INBLOCK      ?PR?HUMIGET?HUMIDUTY
-            CODE    024AH     0010H     INBLOCK      ?PR?MAIN?MAIN
-            CODE    025AH     000CH     UNIT         ?C_C51STARTUP
-            CODE    0266H     0005H     UNIT         ?CO?HUMIDUTY
+            CODE    000DH     02E5H     UNIT         ?C?LIB_CODE
+            CODE    02F2H     0069H     INBLOCK      ?PR?_USARTSENDVAR?DEBUG
+            CODE    035BH     0068H     INBLOCK      ?PR?TASK1_HUMIDITY?HUMIDUTY
+            CODE    03C3H     0048H     INBLOCK      ?PR?_HUMIDISPLAY?HUMIDUTY
+            CODE    040BH     0043H     INBLOCK      ?PR?SYS_TICK_INT?SYS_TICK
+            CODE    044EH     0035H     UNIT         ?CO?HUMIDUTY
+            CODE    0483H     0029H     INBLOCK      ?PR?TASK0_CLOCK?SYS_TICK
+            CODE    04ACH     0020H     INBLOCK      ?PR?SYS_TICK_INIT?SYS_TICK
+            CODE    04CCH     001EH     INBLOCK      ?PR?TASK_HUMIDITYINIT?HUMIDUTY
+            CODE    04EAH     001DH     INBLOCK      ?PR?USARTINIT?DEBUG
+            CODE    0507H     0019H     INBLOCK      ?PR?_VALVECONTROL?HUMIDUTY
+            CODE    0520H     0016H     INBLOCK      ?PR?MAIN?MAIN
+            CODE    0536H     0015H     INBLOCK      ?PR?_USARTSENDSTRING?DEBUG
+            CODE    054BH     0015H     INBLOCK      ?PR?LEDALLOFF?HUMIDUTY
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 2
+
+
+            CODE    0560H     0012H     INBLOCK      ?PR?HUMIGET?HUMIDUTY
+            CODE    0572H     000CH     UNIT         ?C_C51STARTUP
+            CODE    057EH     000AH     INBLOCK      ?PR?DOG_INIT?SYS_TICK
+            CODE    0588H     0009H     UNIT         ?CO?SYS_TICK
 
 
 
@@ -59,9 +73,6 @@ OVERLAY MAP OF MODULE:   .\Objects\ludangwang (MAIN)
 
 
 SEGMENT                                  DATA_GROUP 
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 2
-
-
   +--> CALLED SEGMENT                  START    LENGTH
 ------------------------------------------------------
 ?C_C51STARTUP                          -----    -----
@@ -71,22 +82,30 @@ SEGMENT                                  DATA_GROUP
   +--> ?PR?SYS_TICK_INIT?SYS_TICK
   +--> ?PR?USARTINIT?DEBUG
   +--> ?PR?TASK_HUMIDITYINIT?HUMIDUTY
+  +--> ?PR?DOG_INIT?SYS_TICK
   +--> ?PR?TASK0_CLOCK?SYS_TICK
   +--> ?PR?TASK1_HUMIDITY?HUMIDUTY
+  +--> ?PR?DOG_CLEAR?SYS_TICK
+  +--> ?PR?SYS_IDLE?SYS_TICK
 
 ?PR?TASK0_CLOCK?SYS_TICK               -----    -----
-  +--> ?PR?_USARTSENDVAR?DEBUG
   +--> ?CO?SYS_TICK
   +--> ?PR?_USARTSENDSTRING?DEBUG
+  +--> ?PR?_USARTSENDVAR?DEBUG
 
-?PR?_USARTSENDVAR?DEBUG                000AH    0006H
+?PR?_USARTSENDVAR?DEBUG                000BH    0006H
   +--> ?PR?_USARTSENDSTRING?DEBUG
 
-?PR?TASK1_HUMIDITY?HUMIDUTY            0008H    0002H
-  +--> ?PR?_USARTSENDVAR?DEBUG
+?PR?TASK1_HUMIDITY?HUMIDUTY            0008H    0003H
+  +--> ?PR?HUMIGET?HUMIDUTY
   +--> ?CO?HUMIDUTY
   +--> ?PR?_USARTSENDSTRING?DEBUG
+  +--> ?PR?_USARTSENDVAR?DEBUG
   +--> ?PR?_HUMIDISPLAY?HUMIDUTY
+  +--> ?PR?_VALVECONTROL?HUMIDUTY
+
+?PR?_HUMIDISPLAY?HUMIDUTY              -----    -----
+  +--> ?PR?LEDALLOFF?HUMIDUTY
 
 
 
@@ -100,32 +119,35 @@ SYMBOL TABLE OF MODULE:  .\Objects\ludangwang (MAIN)
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 3
+
+
   D:00B0H         PUBLIC        P3
   B:00A8H.7       PUBLIC        EA
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
   D:00D8H         PUBLIC        CCON
-  C:024AH         PUBLIC        main
+  C:0520H         PUBLIC        main
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          MAIN
-  C:024AH         LINE#         6
-  C:024AH         LINE#         7
-  C:024AH         LINE#         8
-  C:024CH         LINE#         9
-  C:024EH         LINE#         10
-  C:0250H         LINE#         11
-  C:0252H         LINE#         13
-  C:0254H         LINE#         15
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 3
-
-
-  C:0254H         LINE#         16
-  C:0254H         LINE#         17
-  C:0256H         LINE#         18
-  C:0258H         LINE#         19
+  C:0520H         LINE#         16
+  C:0520H         LINE#         17
+  C:0520H         LINE#         18
+  C:0522H         LINE#         19
+  C:0524H         LINE#         20
+  C:0526H         LINE#         21
+  C:0528H         LINE#         22
+  C:052AH         LINE#         24
+  C:052CH         LINE#         26
+  C:052CH         LINE#         27
+  C:052CH         LINE#         28
+  C:052EH         LINE#         29
+  C:0530H         LINE#         30
+  C:0532H         LINE#         31
+  C:0534H         LINE#         32
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
@@ -137,17 +159,17 @@ SYMBOL TABLE OF MODULE:  .\Objects\ludangwang (MAIN)
   D:00B0H         PUBLIC        P3
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
-  C:0211H         PUBLIC        _UsartSendString
+  C:0536H         PUBLIC        _UsartSendString
   B:0098H.1       PUBLIC        TI
   D:00D8H         PUBLIC        CCON
-  C:01F4H         PUBLIC        UsartInit
+  C:04EAH         PUBLIC        UsartInit
   D:0099H         PUBLIC        SBUF
   D:0087H         PUBLIC        PCON
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
   D:008EH         PUBLIC        AUXR
-  C:007BH         PUBLIC        _UsartSendVar
+  C:02F2H         PUBLIC        _UsartSendVar
   B:00A8H.3       PUBLIC        ET1
   D:008DH         PUBLIC        TH1
   D:008BH         PUBLIC        TL1
@@ -155,162 +177,194 @@ SYMBOL TABLE OF MODULE:  .\Objects\ludangwang (MAIN)
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          USARTINIT
-  C:01F4H         LINE#         4
-  C:01F4H         LINE#         5
-  C:01F4H         LINE#         6
-  C:01F7H         LINE#         7
-  C:01FAH         LINE#         8
-  C:01FDH         LINE#         9
-  C:0200H         LINE#         10
-  C:0203H         LINE#         11
-  C:0206H         LINE#         12
-  C:0209H         LINE#         13
-  C:020CH         LINE#         14
-  C:020EH         LINE#         15
-  C:0210H         LINE#         16
+  C:04EAH         LINE#         17
+  C:04EAH         LINE#         18
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 4
+
+
+  C:04EAH         LINE#         19
+  C:04EDH         LINE#         20
+  C:04F0H         LINE#         21
+  C:04F3H         LINE#         22
+  C:04F6H         LINE#         23
+  C:04F9H         LINE#         24
+  C:04FCH         LINE#         25
+  C:04FFH         LINE#         26
+  C:0502H         LINE#         27
+  C:0504H         LINE#         28
+  C:0506H         LINE#         29
   -------         ENDPROC       USARTINIT
   -------         PROC          _USARTSENDSTRING
   D:0001H         SYMBOL        str
-  C:0211H         LINE#         19
-  C:0211H         LINE#         20
-  C:0211H         LINE#         21
-  C:0215H         LINE#         22
-  C:0215H         LINE#         23
-  C:0217H         LINE#         24
-  C:021AH         LINE#         25
-  C:021CH         LINE#         26
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 4
-
-
-  C:0223H         LINE#         27
-  C:0225H         LINE#         28
+  C:0536H         LINE#         38
+  C:0536H         LINE#         39
+  C:0536H         LINE#         40
+  C:053AH         LINE#         41
+  C:053AH         LINE#         42
+  C:053CH         LINE#         43
+  C:053FH         LINE#         44
+  C:0541H         LINE#         45
+  C:0548H         LINE#         46
+  C:054AH         LINE#         47
   -------         ENDPROC       _USARTSENDSTRING
   -------         PROC          _USARTSENDVAR
   D:0003H         SYMBOL        var
   -------         DO            
-  D:000AH         SYMBOL        num
+  D:000BH         SYMBOL        num
   -------         ENDDO         
-  C:007BH         LINE#         30
-  C:007DH         LINE#         31
-  C:007DH         LINE#         33
-  C:008AH         LINE#         34
-  C:00A5H         LINE#         35
-  C:00C0H         LINE#         36
-  C:00CFH         LINE#         37
-  C:00DAH         LINE#         38
-  C:00DDH         LINE#         39
+  C:02F2H         LINE#         54
+  C:02F4H         LINE#         55
+  C:02F4H         LINE#         57
+  C:0301H         LINE#         58
+  C:031CH         LINE#         59
+  C:0337H         LINE#         60
+  C:0346H         LINE#         61
+  C:0351H         LINE#         62
+  C:0354H         LINE#         63
   -------         ENDPROC       _USARTSENDVAR
   -------         ENDMOD        DEBUG
 
   -------         MODULE        SYS_TICK
   C:0000H         SYMBOL        _ICE_DUMMY_
-  D:0010H         PUBLIC        second
+  D:0011H         PUBLIC        second
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
-  C:01D4H         PUBLIC        sys_tick_init
+  C:04ACH         PUBLIC        sys_tick_init
   D:00A8H         PUBLIC        IE
-  D:0011H         PUBLIC        minute
+  D:0012H         PUBLIC        minute
   D:00B8H         PUBLIC        IP
-  C:0139H         PUBLIC        sys_tick_int
+  C:040BH         PUBLIC        sys_tick_int
   D:00D8H         PUBLIC        CCON
+  C:0007H         PUBLIC        dog_clear
+  D:0087H         PUBLIC        PCON
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 5
+
+
   D:0098H         PUBLIC        SCON
-  C:01ABH         PUBLIC        task0_Clock
+  C:0483H         PUBLIC        task0_Clock
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
-  D:0012H         PUBLIC        hour
+  D:0013H         PUBLIC        hour
   D:008EH         PUBLIC        AUXR
   B:00A8H.1       PUBLIC        ET0
   B:0088H.5       PUBLIC        TF0
   D:008CH         PUBLIC        TH0
   D:008AH         PUBLIC        TL0
+  C:057EH         PUBLIC        dog_init
   B:0088H.4       PUBLIC        TR0
+  D:00E1H         PUBLIC        WDT_CONTR
+  C:0003H         PUBLIC        sys_idle
   D:00C8H         PUBLIC        T2CON
-  D:0013H         PUBLIC        sys_tick
+  D:0014H         PUBLIC        sys_tick
   D:00D0H         PUBLIC        PSW
   -------         PROC          SYS_TICK_INIT
-  C:01D4H         LINE#         10
-  C:01D4H         LINE#         11
-  C:01D4H         LINE#         12
-  C:01D7H         LINE#         13
-  C:01DAH         LINE#         14
-  C:01DDH         LINE#         15
-  C:01E0H         LINE#         16
-  C:01E3H         LINE#         17
-  C:01E5H         LINE#         18
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 5
-
-
-  C:01E7H         LINE#         20
-  C:01E9H         LINE#         22
-  C:01ECH         LINE#         23
-  C:01EFH         LINE#         24
-  C:01F1H         LINE#         25
-  C:01F3H         LINE#         26
+  C:04ACH         LINE#         26
+  C:04ACH         LINE#         27
+  C:04ACH         LINE#         28
+  C:04AFH         LINE#         29
+  C:04B2H         LINE#         30
+  C:04B5H         LINE#         31
+  C:04B8H         LINE#         32
+  C:04BBH         LINE#         33
+  C:04BDH         LINE#         34
+  C:04BFH         LINE#         36
+  C:04C1H         LINE#         38
+  C:04C4H         LINE#         39
+  C:04C7H         LINE#         40
+  C:04C9H         LINE#         41
+  C:04CBH         LINE#         42
   -------         ENDPROC       SYS_TICK_INIT
   -------         PROC          SYS_TICK_INT
-  C:0139H         LINE#         28
-  C:013DH         LINE#         30
-  C:013FH         LINE#         31
-  C:0142H         LINE#         32
-  C:0145H         LINE#         33
-  C:0147H         LINE#         35
-  C:014EH         LINE#         36
-  C:014EH         LINE#         37
-  C:0150H         LINE#         38
-  C:0150H         LINE#         41
-  C:0157H         LINE#         42
-  C:0157H         LINE#         43
-  C:0159H         LINE#         44
-  C:015BH         LINE#         46
-  C:015BH         LINE#         47
-  C:015EH         LINE#         49
-  C:0160H         LINE#         50
-  C:0167H         LINE#         51
-  C:0167H         LINE#         52
-  C:016AH         LINE#         53
-  C:016CH         LINE#         54
-  C:0172H         LINE#         55
-  C:0172H         LINE#         56
-  C:0175H         LINE#         57
-  C:0177H         LINE#         58
-  C:0177H         LINE#         59
-  C:0177H         LINE#         60
-  C:0177H         LINE#         61
+  C:040BH         LINE#         49
+  C:040FH         LINE#         51
+  C:0411H         LINE#         52
+  C:0414H         LINE#         53
+  C:0417H         LINE#         54
+  C:0419H         LINE#         58
+  C:0420H         LINE#         59
+  C:0420H         LINE#         60
+  C:0422H         LINE#         61
+  C:0422H         LINE#         64
+  C:0429H         LINE#         65
+  C:0429H         LINE#         66
+  C:042BH         LINE#         67
+  C:042DH         LINE#         69
+  C:042DH         LINE#         70
+  C:0430H         LINE#         72
+  C:0432H         LINE#         73
+  C:0439H         LINE#         74
+  C:0439H         LINE#         75
+  C:043CH         LINE#         76
+  C:043EH         LINE#         77
+  C:0444H         LINE#         78
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 6
+
+
+  C:0444H         LINE#         79
+  C:0447H         LINE#         80
+  C:0449H         LINE#         81
+  C:0449H         LINE#         82
+  C:0449H         LINE#         83
+  C:0449H         LINE#         84
   -------         ENDPROC       SYS_TICK_INT
   -------         PROC          TASK0_CLOCK
-  C:01ABH         LINE#         63
-  C:01ABH         LINE#         64
-  C:01ABH         LINE#         65
-  C:01AFH         LINE#         66
-  C:01AFH         LINE#         67
-  C:01B3H         LINE#         68
-  C:01BBH         LINE#         69
-  C:01BFH         LINE#         70
-  C:01C7H         LINE#         71
-  C:01CBH         LINE#         72
-  C:01D3H         LINE#         73
-  C:01D3H         LINE#         74
+  C:0483H         LINE#         90
+  C:0483H         LINE#         91
+  C:0483H         LINE#         92
+  C:0487H         LINE#         93
+  C:0487H         LINE#         94
+  C:048FH         LINE#         95
+  C:0493H         LINE#         96
+  C:049BH         LINE#         97
+  C:049FH         LINE#         98
+  C:04A7H         LINE#         99
+  C:04ABH         LINE#         101
+  C:04ABH         LINE#         102
   -------         ENDPROC       TASK0_CLOCK
+  -------         PROC          SYS_IDLE
+  C:0003H         LINE#         104
+  C:0003H         LINE#         105
+  C:0003H         LINE#         106
+  C:0006H         LINE#         107
+  -------         ENDPROC       SYS_IDLE
+  -------         PROC          DOG_INIT
+  C:057EH         LINE#         118
+  C:057EH         LINE#         119
+  C:057EH         LINE#         120
+  C:0581H         LINE#         121
+  C:0584H         LINE#         122
+  C:0587H         LINE#         124
+  -------         ENDPROC       DOG_INIT
+  -------         PROC          DOG_CLEAR
+  C:0007H         LINE#         126
+  C:0007H         LINE#         127
+  C:0007H         LINE#         128
+  C:000AH         LINE#         129
+  -------         ENDPROC       DOG_CLEAR
   -------         ENDMOD        SYS_TICK
 
   -------         MODULE        HUMIDUTY
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0091H         PUBLIC        P1M0
-  C:0226H         PUBLIC        task_HumidityInit
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 6
-
-
+  C:04CCH         PUBLIC        task_HumidityInit
   D:0080H         PUBLIC        P0
   D:0092H         PUBLIC        P1M1
   D:0090H         PUBLIC        P1
+  D:00B1H         PUBLIC        P3M0
   D:00A0H         PUBLIC        P2
+  D:00B2H         PUBLIC        P3M1
   D:00B0H         PUBLIC        P3
-  D:0014H         PUBLIC        task_humidity_timer
+  D:0015H         PUBLIC        ValveStatus
+  C:054BH         PUBLIC        LEDAllOff
+  D:0016H         PUBLIC        task_humidity_timer
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 7
+
+
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
-  C:017CH         PUBLIC        task1_Humidity
+  C:035BH         PUBLIC        task1_Humidity
   D:00D8H         PUBLIC        CCON
   B:0090H.0       PUBLIC        P10
   D:00C5H         PUBLIC        ADC_CONTR
@@ -321,111 +375,149 @@ SYMBOL TABLE OF MODULE:  .\Objects\ludangwang (MAIN)
   D:0088H         PUBLIC        TCON
   B:00B0H.2       PUBLIC        P32
   B:0090H.4       PUBLIC        P14
+  B:00B0H.3       PUBLIC        P33
   B:0090H.5       PUBLIC        P15
-  C:0238H         PUBLIC        HumiGet
+  C:0560H         PUBLIC        HumiGet
   B:00B0H.4       PUBLIC        P34
   B:0090H.6       PUBLIC        P16
   B:00B0H.5       PUBLIC        P35
   B:0090H.7       PUBLIC        P17
   B:00B0H.7       PUBLIC        P37
   D:00C6H         PUBLIC        ADC_DATA
+  C:0507H         PUBLIC        _ValveControl
   D:00C8H         PUBLIC        T2CON
-  C:00E4H         PUBLIC        _HumiDisplay
+  C:03C3H         PUBLIC        _HumiDisplay
   D:00D0H         PUBLIC        PSW
   -------         PROC          TASK_HUMIDITYINIT
-  C:0226H         LINE#         17
-  C:0226H         LINE#         18
-  C:0226H         LINE#         19
-  C:0229H         LINE#         20
-  C:022CH         LINE#         21
-  C:022EH         LINE#         22
-  C:0231H         LINE#         23
-  C:0234H         LINE#         24
-  C:0237H         LINE#         26
+  C:04CCH         LINE#         35
+  C:04CCH         LINE#         36
+  C:04CCH         LINE#         37
+  C:04CFH         LINE#         38
+  C:04D2H         LINE#         39
+  C:04D4H         LINE#         41
+  C:04D7H         LINE#         42
+  C:04DAH         LINE#         43
+  C:04DCH         LINE#         44
+  C:04DFH         LINE#         45
+  C:04E2H         LINE#         46
+  C:04E5H         LINE#         47
+  C:04E7H         LINE#         48
+  C:04E9H         LINE#         50
   -------         ENDPROC       TASK_HUMIDITYINIT
+  -------         PROC          LEDALLOFF
+  C:054BH         LINE#         57
+  C:054BH         LINE#         58
+  C:054BH         LINE#         59
+  C:054DH         LINE#         60
+  C:054FH         LINE#         61
+  C:0551H         LINE#         62
+  C:0553H         LINE#         63
+  C:0555H         LINE#         64
+  C:0557H         LINE#         65
+  C:0559H         LINE#         66
+  C:055BH         LINE#         67
+  C:055DH         LINE#         68
+  C:055FH         LINE#         69
+  -------         ENDPROC       LEDALLOFF
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 8
+
+
   -------         PROC          _HUMIDISPLAY
   D:0007H         SYMBOL        humi
-  C:00E4H         LINE#         28
-  C:00E4H         LINE#         29
-  C:00E4H         LINE#         30
-  C:00F0H         LINE#         31
-  C:00F0H         LINE#         32
-  C:00F2H         LINE#         33
-  C:00F4H         LINE#         34
-  C:00F6H         LINE#         35
-  C:00F8H         LINE#         36
-  C:00FAH         LINE#         37
-  C:00FCH         LINE#         38
-  C:00FEH         LINE#         39
-  C:0100H         LINE#         40
-  C:0102H         LINE#         41
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 7
-
-
-  C:0104H         LINE#         42
-  C:0124H         LINE#         43
-  C:0124H         LINE#         44
-  C:0124H         LINE#         45
-  C:0126H         LINE#         46
-  C:0126H         LINE#         47
-  C:0128H         LINE#         48
-  C:0128H         LINE#         49
-  C:012AH         LINE#         50
-  C:012AH         LINE#         51
-  C:012CH         LINE#         52
-  C:012CH         LINE#         53
-  C:012EH         LINE#         54
-  C:012EH         LINE#         55
-  C:0130H         LINE#         56
-  C:0130H         LINE#         57
-  C:0132H         LINE#         58
-  C:0132H         LINE#         59
-  C:0134H         LINE#         60
-  C:0134H         LINE#         61
-  C:0136H         LINE#         62
-  C:0136H         LINE#         63
-  C:0138H         LINE#         64
-  C:0138H         LINE#         65
-  C:0138H         LINE#         66
-  C:0138H         LINE#         67
-  C:0138H         LINE#         68
+  C:03C3H         LINE#         76
+  C:03C3H         LINE#         77
+  C:03C3H         LINE#         78
+  C:03C5H         LINE#         79
+  C:03D1H         LINE#         80
+  C:03D1H         LINE#         81
+  C:03F6H         LINE#         82
+  C:03F6H         LINE#         83
+  C:03F6H         LINE#         84
+  C:03F8H         LINE#         85
+  C:03F8H         LINE#         86
+  C:03FAH         LINE#         87
+  C:03FAH         LINE#         88
+  C:03FCH         LINE#         89
+  C:03FCH         LINE#         90
+  C:03FEH         LINE#         91
+  C:03FEH         LINE#         92
+  C:0400H         LINE#         93
+  C:0400H         LINE#         94
+  C:0402H         LINE#         95
+  C:0402H         LINE#         96
+  C:0404H         LINE#         97
+  C:0404H         LINE#         98
+  C:0406H         LINE#         99
+  C:0406H         LINE#         100
+  C:0408H         LINE#         101
+  C:0408H         LINE#         102
+  C:040AH         LINE#         103
+  C:040AH         LINE#         104
+  C:040AH         LINE#         105
+  C:040AH         LINE#         106
+  C:040AH         LINE#         107
+  C:040AH         LINE#         108
   -------         ENDPROC       _HUMIDISPLAY
+  -------         PROC          _VALVECONTROL
+  D:0007H         SYMBOL        humi
+  C:0507H         LINE#         114
+  C:0507H         LINE#         115
+  C:0507H         LINE#         116
+  C:050DH         LINE#         117
+  C:050DH         LINE#         118
+  C:050FH         LINE#         119
+  C:0512H         LINE#         120
+  C:0512H         LINE#         121
+  C:0518H         LINE#         122
+  C:0518H         LINE#         123
+  C:051AH         LINE#         124
+  C:051DH         LINE#         125
+  C:051DH         LINE#         127
+  C:051DH         LINE#         128
+  C:051FH         LINE#         129
+  C:051FH         LINE#         130
+  -------         ENDPROC       _VALVECONTROL
   -------         PROC          HUMIGET
-  C:0238H         LINE#         70
-  C:0238H         LINE#         71
-  C:0238H         LINE#         72
-  C:023BH         LINE#         73
-  C:023CH         LINE#         74
-  C:023DH         LINE#         75
-  C:023EH         LINE#         76
-  C:023FH         LINE#         77
-  C:0244H         LINE#         78
-  C:0247H         LINE#         80
-  C:0249H         LINE#         81
+  C:0560H         LINE#         137
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 9
+
+
+  C:0560H         LINE#         138
+  C:0560H         LINE#         139
+  C:0563H         LINE#         140
+  C:0564H         LINE#         141
+  C:0565H         LINE#         142
+  C:0566H         LINE#         143
+  C:0567H         LINE#         144
+  C:056CH         LINE#         145
+  C:056FH         LINE#         147
+  C:0571H         LINE#         148
   -------         ENDPROC       HUMIGET
   -------         PROC          TASK1_HUMIDITY
   -------         DO            
   D:0008H         SYMBOL        humi_grade
   D:0009H         SYMBOL        humi_sense
+  D:000AH         SYMBOL        dat
   -------         ENDDO         
-  C:017CH         LINE#         83
-  C:017CH         LINE#         84
-  C:017CH         LINE#         86
-  C:0180H         LINE#         87
-  C:0180H         LINE#         88
-  C:0183H         LINE#         90
-  C:0186H         LINE#         91
-  C:018BH         LINE#         93
-  C:018EH         LINE#         95
-  C:0192H         LINE#         96
-  C:019AH         LINE#         97
-BL51 BANKED LINKER/LOCATER V6.22                                                      06/05/2020  17:07:18  PAGE 8
-
-
-  C:019EH         LINE#         98
-  C:01A6H         LINE#         99
-  C:01AAH         LINE#         100
-  C:01AAH         LINE#         101
+  C:035BH         LINE#         155
+  C:035BH         LINE#         156
+  C:035BH         LINE#         159
+  C:035FH         LINE#         160
+  C:035FH         LINE#         161
+  C:0362H         LINE#         163
+  C:0365H         LINE#         164
+  C:036AH         LINE#         166
+  C:036DH         LINE#         167
+  C:0375H         LINE#         168
+  C:039AH         LINE#         169
+  C:03A2H         LINE#         170
+  C:03A6H         LINE#         171
+  C:03ACH         LINE#         172
+  C:03B4H         LINE#         174
+  C:03BAH         LINE#         175
+  C:03BEH         LINE#         176
+  C:03C2H         LINE#         178
+  C:03C2H         LINE#         179
   -------         ENDPROC       TASK1_HUMIDITY
   -------         ENDMOD        HUMIDUTY
 
@@ -444,16 +536,43 @@ SYMBOL TABLE OF MODULE:  .\Objects\ludangwang (MAIN)
   D:00D0H         PUBLIC        PSW
   -------         ENDMOD        CONFIG
 
+  -------         MODULE        ?C?FPADD
+  C:0014H         PUBLIC        ?C?FPADD
+  C:0010H         PUBLIC        ?C?FPSUB
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/07/2020  12:51:14  PAGE 10
+
+
+  -------         ENDMOD        ?C?FPADD
+
+  -------         MODULE        ?C?FPDIV
+  C:0108H         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?FCAST
+  C:01AFH         PUBLIC        ?C?FCASTC
+  C:01AAH         PUBLIC        ?C?FCASTI
+  C:01A5H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+  C:01E3H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
   -------         MODULE        ?C?CLDPTR
-  C:000DH         PUBLIC        ?C?CLDPTR
+  C:0264H         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
 
+  -------         MODULE        ?C?IMUL
+  C:027DH         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
   -------         MODULE        ?C?UIDIV
-  C:0026H         PUBLIC        ?C?UIDIV
+  C:028FH         PUBLIC        ?C?UIDIV
   -------         ENDMOD        ?C?UIDIV
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?HUMIGET?HUMIDUTY
+  -------         MODULE        ?C?LNEG
+  C:02E4H         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
 
-Program Size: data=22.0 xdata=0 code=616
-LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
+Program Size: data=24.0 xdata=0 code=1425
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

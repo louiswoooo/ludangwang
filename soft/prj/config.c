@@ -1,3 +1,11 @@
+/*****************************************************************************
+  * @file:    	config.c
+  * @author:  	louiswoo
+  * @version: 	V1.0
+  * @date:	2020-6-6
+  * @brief:	系统共用函数模块，目前提供两个函数
+*******************************************************************************/
+
 #include "config.h"
 /*
 void delay_10us(u8 count)
@@ -11,6 +19,7 @@ void delay_10us(u8 count)
 		while (--i);
 	}
 }
+
 void delay_ms(u8 ms)
 {
 	unsigned char i, j;

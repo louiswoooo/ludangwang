@@ -3,6 +3,8 @@
 
 void sys_tick_init(void);		//10ms@6.000MHz
 void task0_Clock(void);
-
+void sys_idle(void);
+void dog_init(void);
+void dog_clear(void);
 
 #endif

@@ -1,0 +1,1 @@
+"prj\sys_tick.c" ROM(SMALL) OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\sys_tick.lst) TABS (2) OBJECT(.\Objects\sys_tick.obj)
