@@ -116,11 +116,13 @@ u8	ValveControl(u8 humi)
 	if(humi > Valve_OFF_THRESHHOLD)
 	{
 		ValveOff();
+		ValveStatus = 0;
 		return 1;
 	}
 	else if(humi < Valve_ON_THRESHHOLD)
 	{
 		ValveOn();
+		ValveStatus = 1;
 		return 1;
 	}
 	else
